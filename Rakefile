@@ -1,18 +1,16 @@
 begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "talib_ruby"
-    gemspec.summary = "Ruby Wrapper for ta-lib"
-    gemspec.description = "Ruby Wrapper for the Technical Analysis Library ta-lib"
-    gemspec.email = "rivella50@gmail.com"
-    gemspec.homepage = "http://github.com/rivella50/talib-ruby"
-    gemspec.authors = ["Valentin Treu"]
-    gemspec.extensions << 'ext/talib/extconf.rb'
-    gemspec.version = '1.0.3'
-    gemspec.files = FileList['example/ma.rb','ext/talib/talib.c', 'README.rdoc','lib/**/*.rb']
-    gemspec.test_files = []
-  end
-  Jeweler::GemcutterTasks.new
+  require 'rake/extensiontask'
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install jeweler"
+  abort <<-error
+  rake-compile is missing; rake-compiler is needed to build the C wrapping code.
+  Install it by running `gem install rake-compiler`
+  error
+end
+
+spec = Gem::Specification.load('talib_ruby.gemspec')
+
+Gem::PackageTask.new(spec) do |pkg|
+end
+
+Rake::ExtensionTask.new('talib') do |ext|
 end
