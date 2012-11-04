@@ -1,3 +1,6 @@
 .idea
 *.zip
 *.xls
+pkg/
+tmp/
+lib/talib.so
